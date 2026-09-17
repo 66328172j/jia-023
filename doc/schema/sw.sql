@@ -60,6 +60,9 @@ CREATE TABLE IF NOT EXISTS t_sw_project (
   proj_name varchar(128) DEFAULT NULL COMMENT '项目名称',
   proj_type varchar(32) DEFAULT NULL COMMENT '项目类型',
   region_name varchar(128) DEFAULT NULL COMMENT '所属流域',
+  th1_max decimal(10,2) DEFAULT NULL COMMENT '第一档上限',
+  th2_max decimal(10,2) DEFAULT NULL COMMENT '第二档上限',
+  th3_max decimal(10,2) DEFAULT NULL COMMENT '第三档上限',
   status int DEFAULT NULL COMMENT '档案状态 0在建 1已验收',
   del_flag int DEFAULT '0' COMMENT '删除标记 0正常 1删除',
   create_by varchar(64) DEFAULT NULL COMMENT '创建者',
@@ -105,6 +108,7 @@ CREATE TABLE IF NOT EXISTS t_sw_relief_row (
 CREATE TABLE IF NOT EXISTS t_sw_relief_std (
   id bigint NOT NULL COMMENT '主键',
   std_no varchar(64) DEFAULT NULL COMMENT '标准编号',
+  proj_no varchar(64) DEFAULT NULL COMMENT '项目编号',
   rule_name varchar(64) DEFAULT NULL COMMENT '标准名称',
   proj_id int DEFAULT NULL COMMENT '适用项目',
   qty decimal(12,2) DEFAULT NULL COMMENT '减免比例(%)',

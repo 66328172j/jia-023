@@ -37,6 +37,11 @@ public class TSwReliefStd implements Serializable {
     @ApiModelProperty(value = "标准编号")
     private String stdNo;
 
+    /** 项目编号 */
+    @TableField("proj_no")
+    @ApiModelProperty(value = "项目编号")
+    private String projNo;
+
     /** 标准名称 */
     @TableField("rule_name")
     @ApiModelProperty(value = "标准名称")
@@ -103,6 +108,14 @@ public class TSwReliefStd implements Serializable {
 
     public void setStdNo(String stdNo) {
         this.stdNo = stdNo;
+    }
+
+    public String getProjNo() {
+        return projNo;
+    }
+
+    public void setProjNo(String projNo) {
+        this.projNo = projNo;
     }
 
     public String getRuleName() {

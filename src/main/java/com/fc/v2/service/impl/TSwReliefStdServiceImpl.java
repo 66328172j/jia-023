@@ -11,10 +11,8 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.fc.v2.common.support.ConvertUtil;
 import com.fc.v2.mapper.auto.TSwReliefStdMapper;
-import com.fc.v2.mapper.auto.TSwCompRuleMapper;
 import com.fc.v2.mapper.auto.TSwProjectMapper;
 import com.fc.v2.model.auto.TSwReliefStd;
-import com.fc.v2.model.auto.TSwCompRule;
 import com.fc.v2.model.auto.TSwProject;
 import com.fc.v2.service.ITSwReliefStdService;
 import com.fc.v2.util.StringUtils;
@@ -32,9 +30,6 @@ public class TSwReliefStdServiceImpl extends ServiceImpl<TSwReliefStdMapper, TSw
 
     @Autowired
     private TSwProjectMapper swProjectMapper;
-
-    @Autowired
-    private TSwCompRuleMapper tswCompRuleMapper;
 
     @Override
     public TSwReliefStd selectTSwReliefStdById(Long id) {
@@ -66,6 +61,7 @@ public class TSwReliefStdServiceImpl extends ServiceImpl<TSwReliefStdMapper, TSw
         if (refArch.getStatus() != null && refArch.getStatus() == 1) {
             return 0;
         }
+        record.setProjNo(refArch.getProjNo());
         if (StringUtils.isNotEmpty(record.getStdNo())) {
             Integer dupCnt = this.baseMapper.selectCount(new QueryWrapper<TSwReliefStd>()
                     .eq("std_no", record.getStdNo()).eq("del_flag", 0));
@@ -73,8 +69,7 @@ public class TSwReliefStdServiceImpl extends ServiceImpl<TSwReliefStdMapper, TSw
                 return 0;
             }
         }
-        TSwCompRule bandArch = tswCompRuleMapper.selectOne(new QueryWrapper<TSwCompRule>()
-                .eq("status", 0).eq("del_flag", 0).orderByDesc("priority").last("limit 1"));
+        TSwProject bandArch = swProjectMapper.selectById(record.getProjId());
         BigDecimal bandVal = record.getQty();
         int bandLevel = 0;
         if (bandVal != null && bandArch != null) {
